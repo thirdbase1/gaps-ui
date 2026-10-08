@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { cn } from "@/lib/utils";
 import {
   CommandDialog,
   CommandEmpty,
@@ -130,4 +129,3 @@ export function useCommandPaletteHotkey(
   }, [onOpenChange]);
 }
 
-export { cn as _cn };

@@ -11,7 +11,10 @@
       "registryDependencies": [],
       "dependencies": [],
       "files": [
-        { "path": "registry/empty-state/empty-state.tsx", "type": "registry:component" }
+        {
+          "path": "registry/empty-state/empty-state.tsx",
+          "type": "registry:component"
+        }
       ]
     },
     {
@@ -19,10 +22,17 @@
       "type": "registry:component",
       "title": "Wizard Form",
       "description": "Multi-step form shell with progress indicator, per-step validation slots and back/next controls.",
-      "registryDependencies": ["button", "input", "label"],
+      "registryDependencies": [
+        "button",
+        "input",
+        "label"
+      ],
       "dependencies": [],
       "files": [
-        { "path": "registry/wizard-form/wizard-form.tsx", "type": "registry:component" }
+        {
+          "path": "registry/wizard-form/wizard-form.tsx",
+          "type": "registry:component"
+        }
       ]
     },
     {
@@ -30,10 +40,18 @@
       "type": "registry:component",
       "title": "Saved Views",
       "description": "Filter bar with named, persistable views: combine filter chips, save the current set under a name, switch between views.",
-      "registryDependencies": ["button", "dropdown-menu", "input", "badge"],
+      "registryDependencies": [
+        "button",
+        "dropdown-menu",
+        "input",
+        "badge"
+      ],
       "dependencies": [],
       "files": [
-        { "path": "registry/saved-views/saved-views.tsx", "type": "registry:component" }
+        {
+          "path": "registry/saved-views/saved-views.tsx",
+          "type": "registry:component"
+        }
       ]
     },
     {
@@ -41,10 +59,17 @@
       "type": "registry:component",
       "title": "Onboarding Checklist",
       "description": "Dismissable onboarding card with progress ring and per-task completion state, persisted to localStorage.",
-      "registryDependencies": ["button", "checkbox", "progress"],
+      "registryDependencies": [
+        "button",
+        "checkbox",
+        "progress"
+      ],
       "dependencies": [],
       "files": [
-        { "path": "registry/onboarding-checklist/onboarding-checklist.tsx", "type": "registry:component" }
+        {
+          "path": "registry/onboarding-checklist/onboarding-checklist.tsx",
+          "type": "registry:component"
+        }
       ]
     },
     {
@@ -52,10 +77,15 @@
       "type": "registry:component",
       "title": "Preview Uploader",
       "description": "File input with thumbnail previews, image/pdf detection, size formatting, remove buttons and reject reasons.",
-      "registryDependencies": ["button"],
+      "registryDependencies": [
+        "button"
+      ],
       "dependencies": [],
       "files": [
-        { "path": "registry/preview-uploader/preview-uploader.tsx", "type": "registry:component" }
+        {
+          "path": "registry/preview-uploader/preview-uploader.tsx",
+          "type": "registry:component"
+        }
       ]
     },
     {
@@ -63,10 +93,55 @@
       "type": "registry:component",
       "title": "Command Palette with Saved Views",
       "description": "Command palette (cmdk) extended with a 'Views' group: register named filter snapshots users can jump to from the palette.",
-      "registryDependencies": ["command", "dialog"],
+      "registryDependencies": [
+        "command",
+        "dialog"
+      ],
       "dependencies": [],
       "files": [
-        { "path": "registry/command-palette-views/command-palette-views.tsx", "type": "registry:component" }
+        {
+          "path": "registry/command-palette-views/command-palette-views.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "import-wizard",
+      "type": "registry:component",
+      "title": "Import Wizard",
+      "description": "CSV import in three steps: upload with a dependency-free parser, column mapping with auto-detection, live preview with per-row validation before importing.",
+      "registryDependencies": [
+        "button",
+        "input",
+        "label",
+        "select"
+      ],
+      "dependencies": [],
+      "files": [
+        {
+          "path": "registry/import-wizard/import-wizard.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "share-dialog",
+      "type": "registry:component",
+      "title": "Share Dialog",
+      "description": "Share dialog with copy-to-clipboard link, invite-by-email list with per-invite roles, member list, and clipboard fallback.",
+      "registryDependencies": [
+        "button",
+        "input",
+        "label",
+        "badge",
+        "dialog"
+      ],
+      "dependencies": [],
+      "files": [
+        {
+          "path": "registry/share-dialog/share-dialog.tsx",
+          "type": "registry:component"
+        }
       ]
     }
   ]

@@ -104,6 +104,45 @@
           "type": "registry:component"
         }
       ]
+    },
+    {
+      "name": "import-wizard",
+      "type": "registry:component",
+      "title": "Import Wizard",
+      "description": "CSV import in three steps: upload with a dependency-free parser, column mapping with auto-detection, live preview with per-row validation before importing.",
+      "registryDependencies": [
+        "button",
+        "input",
+        "label",
+        "select"
+      ],
+      "dependencies": [],
+      "files": [
+        {
+          "path": "registry/import-wizard/import-wizard.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "share-dialog",
+      "type": "registry:component",
+      "title": "Share Dialog",
+      "description": "Share dialog with copy-to-clipboard link, invite-by-email list with per-invite roles, member list, and clipboard fallback.",
+      "registryDependencies": [
+        "button",
+        "input",
+        "label",
+        "badge",
+        "dialog"
+      ],
+      "dependencies": [],
+      "files": [
+        {
+          "path": "registry/share-dialog/share-dialog.tsx",
+          "type": "registry:component"
+        }
+      ]
     }
   ]
 }

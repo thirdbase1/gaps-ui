@@ -18,6 +18,8 @@ shadcn/ui gives you the primitives (button, dialog, command…), and registries 
 | `onboarding-checklist` | Dismissable get-started card with progress ring + programmatic `complete()` hook |
 | `preview-uploader` | File input with thumbnails, pdf detection, size formatting, reject reasons, drag-drop |
 | `command-palette-views` | cmdk palette with a "Views" group — jump straight to saved filters (Ctrl/Cmd+K hook included) |
+| `import-wizard` | CSV import: 3 steps (upload → map columns with auto-detect → review), dependency-free parser, per-row validation, invalid rows skipped |
+| `share-dialog` | Copy-link dialog with clipboard fallback, invite-by-email with roles, member list |
 
 ## Install
 
@@ -63,8 +65,8 @@ Each component folder contains full JSDoc usage docs at the top of the file.
 ## Roadmap
 
 - [ ] `data-table-views` — saved views wired into TanStack Table
-- [ ] `import-wizard` — CSV import with column mapping + validation
-- [ ] `share-dialog` — permission picker with invite-by-email flow
+- [x] `import-wizard` — CSV import with column mapping + validation
+- [x] `share-dialog` — permission picker with invite-by-email flow
 - [ ] `diff-view` — before/after field comparison for admin/audit UIs
 
 ## License
