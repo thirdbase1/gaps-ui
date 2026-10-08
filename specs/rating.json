@@ -1,0 +1,38 @@
+{
+  "name": "rating",
+  "type": "registry:component",
+  "title": "Rating",
+  "description": "Interactive star rating with hover preview, keyboard arrows, partial fill and read-only mode.",
+  "registryDependencies": [],
+  "dependencies": [
+    "lucide-react"
+  ],
+  "files": [
+    {
+      "path": "registry/rating/rating.tsx"
+    }
+  ],
+  "usage": "<Rating value={rating} onChange={setRating} allowClear />",
+  "props": [
+    [
+      "value",
+      "number",
+      "Current rating"
+    ],
+    [
+      "onChange",
+      "(v: number) => void",
+      "Change callback"
+    ],
+    [
+      "max",
+      "number",
+      "Number of stars (default 5)"
+    ],
+    [
+      "readOnly",
+      "boolean",
+      "Display-only mode"
+    ]
+  ]
+}

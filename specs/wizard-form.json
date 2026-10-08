@@ -1,0 +1,16 @@
+{
+  "name": "wizard-form",
+  "type": "registry:component",
+  "title": "WizardForm",
+  "description": "Multi-step form shell with a step rail, per-step validation and submitting state.",
+  "registryDependencies": [],
+  "dependencies": [
+    "lucide-react"
+  ],
+  "files": [
+    {
+      "path": "registry/wizard-form/wizard-form.tsx"
+    }
+  ],
+  "usage": "<WizardForm steps={[{ id: \"a\", title: \"Account\" }, { id: \"b\", title: \"Review\" }]} onFinish={submit}>\n  <WizardStep stepId=\"a\">{/* fields */}</WizardStep>\n  <WizardStep stepId=\"b\">{/* review */}</WizardStep>\n</WizardForm>"
+}

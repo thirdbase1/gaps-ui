@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "date-range-picker",
+  "type": "registry:component",
+  "title": "DateRangePicker",
+  "description": "From/to date range picker built on the shadcn Calendar with quick presets and clear.",
+  "registryDependencies": [
+    "button",
+    "calendar",
+    "popover"
+  ],
+  "dependencies": [
+    "lucide-react",
+    "date-fns"
+  ],
+  "files": [
+    {
+      "path": "registry/date-range-picker/date-range-picker.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\nimport { Button } from \"@/components/ui/button\";\nimport { Calendar } from \"@/components/ui/calendar\";\nimport {\n  Popover,\n  PopoverContent,\n  PopoverTrigger,\n} from \"@/components/ui/popover\";\nimport { CalendarIcon } from \"lucide-react\";\nimport { format } from \"date-fns\";\n\n/**\n * DateRangePicker \u2014 a from/to date range picker built on the shadcn Calendar\n * with quick presets. Controlled or uncontrolled.\n *\n * <DateRangePicker value={range} onChange={setRange} presets />\n */\n\nexport interface DateRange {\n  from: Date | undefined;\n  to?: Date | undefined;\n}\n\nfunction presetRange(days: number): DateRange {\n  const to = new Date();\n  const from = new Date();\n  from.setDate(from.getDate() - days);\n  return { from, to };\n}\n\nexport function DateRangePicker({\n  value,\n  onChange,\n  placeholder = \"Pick a date range\",\n  presets = true,\n  className,\n  disabled,\n}: {\n  value?: DateRange;\n  onChange?: (range: DateRange) => void;\n  placeholder?: string;\n  presets?: boolean;\n  className?: string;\n  disabled?: boolean;\n}) {\n  const [internal, setInternal] = React.useState<DateRange | undefined>({ from: undefined, to: undefined });\n  const [open, setOpen] = React.useState(false);\n  const range = value ?? internal;\n\n  const set = (r: DateRange | undefined) => {\n    if (!value) setInternal(r);\n    onChange?.(r ?? { from: undefined, to: undefined });\n  };\n\n  const label = range?.from\n    ? range.to\n      ? `${format(range.from, \"LLL dd, y\")} \u2013 ${format(range.to, \"LLL dd, y\")}`\n      : format(range.from, \"LLL dd, y\")\n    : placeholder;\n\n  return (\n    <div className={cn(\"flex gap-2\", className)}>\n      <Popover open={open} onOpenChange={setOpen}>\n        <PopoverTrigger asChild>\n          <Button\n            variant=\"outline\"\n            disabled={disabled}\n            className={cn(\n              \"justify-start text-left font-normal\",\n              !range?.from && \"text-muted-foreground\",\n            )}\n          >\n            <CalendarIcon className=\"size-4\" />\n            {label}\n          </Button>\n        </PopoverTrigger>\n        <PopoverContent className=\"w-auto p-0\" align=\"start\">\n          <Calendar\n            mode=\"range\"\n            selected={range}\n            onSelect={(v: unknown) => set(v as DateRange)}\n            numberOfMonths={2}\n            autoFocus\n          />\n        </PopoverContent>\n      </Popover>\n      {presets && (\n        <div className=\"flex gap-1\">\n          {([7, 30, 90] as const).map((d) => (\n            <Button\n              key={d}\n              variant=\"ghost\"\n              size=\"sm\"\n              disabled={disabled}\n              onClick={() => set(presetRange(d))}\n            >\n              {d}d\n            </Button>\n          ))}\n        </div>\n      )}\n      {range?.from && (\n        <Button variant=\"ghost\" size=\"sm\" disabled={disabled} onClick={() => set(undefined)}>\n          Clear\n        </Button>\n      )}\n    </div>\n  );\n}\n"
+    }
+  ]
+}

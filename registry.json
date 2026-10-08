@@ -1,89 +1,20 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "gaps-ui",
-  "homepage": "https://github.com/thirdbase1/gaps-ui",
+  "homepage": "https://thirdbase1.github.io/gaps-ui/",
   "items": [
     {
-      "name": "empty-state",
+      "name": "banner",
       "type": "registry:component",
-      "title": "Empty State",
-      "description": "Centered placeholder for empty lists, tables and search results, with icon, title, description and actions.",
+      "title": "Banner",
+      "description": "Full-width announcement/alert strip with tone variants and dismissable persistence.",
       "registryDependencies": [],
-      "dependencies": [],
-      "files": [
-        {
-          "path": "registry/empty-state/empty-state.tsx",
-          "type": "registry:component"
-        }
-      ]
-    },
-    {
-      "name": "wizard-form",
-      "type": "registry:component",
-      "title": "Wizard Form",
-      "description": "Multi-step form shell with progress indicator, per-step validation slots and back/next controls.",
-      "registryDependencies": [
-        "button",
-        "input",
-        "label"
+      "dependencies": [
+        "lucide-react"
       ],
-      "dependencies": [],
       "files": [
         {
-          "path": "registry/wizard-form/wizard-form.tsx",
-          "type": "registry:component"
-        }
-      ]
-    },
-    {
-      "name": "saved-views",
-      "type": "registry:component",
-      "title": "Saved Views",
-      "description": "Filter bar with named, persistable views: combine filter chips, save the current set under a name, switch between views.",
-      "registryDependencies": [
-        "button",
-        "dropdown-menu",
-        "input",
-        "badge"
-      ],
-      "dependencies": [],
-      "files": [
-        {
-          "path": "registry/saved-views/saved-views.tsx",
-          "type": "registry:component"
-        }
-      ]
-    },
-    {
-      "name": "onboarding-checklist",
-      "type": "registry:component",
-      "title": "Onboarding Checklist",
-      "description": "Dismissable onboarding card with progress ring and per-task completion state, persisted to localStorage.",
-      "registryDependencies": [
-        "button",
-        "checkbox",
-        "progress"
-      ],
-      "dependencies": [],
-      "files": [
-        {
-          "path": "registry/onboarding-checklist/onboarding-checklist.tsx",
-          "type": "registry:component"
-        }
-      ]
-    },
-    {
-      "name": "preview-uploader",
-      "type": "registry:component",
-      "title": "Preview Uploader",
-      "description": "File input with thumbnail previews, image/pdf detection, size formatting, remove buttons and reject reasons.",
-      "registryDependencies": [
-        "button"
-      ],
-      "dependencies": [],
-      "files": [
-        {
-          "path": "registry/preview-uploader/preview-uploader.tsx",
+          "path": "registry/banner/banner.tsx",
           "type": "registry:component"
         }
       ]
@@ -91,13 +22,16 @@
     {
       "name": "command-palette-views",
       "type": "registry:component",
-      "title": "Command Palette with Saved Views",
-      "description": "Command palette (cmdk) extended with a 'Views' group: register named filter snapshots users can jump to from the palette.",
+      "title": "CommandPaletteViews",
+      "description": "cmdk command palette with a Views group and a Ctrl/Cmd+K hotkey hook.",
       "registryDependencies": [
         "command",
         "dialog"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "lucide-react",
+        "cmdk"
+      ],
       "files": [
         {
           "path": "registry/command-palette-views/command-palette-views.tsx",
@@ -106,17 +40,90 @@
       ]
     },
     {
+      "name": "cookie-consent",
+      "type": "registry:component",
+      "title": "CookieConsent",
+      "description": "Cookie consent banner with accept/reject/custom categories, persisted decision and a useConsent hook.",
+      "registryDependencies": [
+        "button"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/cookie-consent/cookie-consent.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "date-range-picker",
+      "type": "registry:component",
+      "title": "DateRangePicker",
+      "description": "From/to date range picker built on the shadcn Calendar with quick presets and clear.",
+      "registryDependencies": [
+        "button",
+        "calendar",
+        "popover"
+      ],
+      "dependencies": [
+        "lucide-react",
+        "date-fns"
+      ],
+      "files": [
+        {
+          "path": "registry/date-range-picker/date-range-picker.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "empty-state",
+      "type": "registry:component",
+      "title": "EmptyState",
+      "description": "Composable empty-state placeholder: icon, title, description, actions.",
+      "registryDependencies": [],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/empty-state/empty-state.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "file-tree",
+      "type": "registry:component",
+      "title": "FileTree",
+      "description": "Hierarchical tree navigation with expand/collapse, folders, selection and per-node icons.",
+      "registryDependencies": [],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/file-tree/file-tree.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
       "name": "import-wizard",
       "type": "registry:component",
-      "title": "Import Wizard",
-      "description": "CSV import in three steps: upload with a dependency-free parser, column mapping with auto-detection, live preview with per-row validation before importing.",
+      "title": "ImportWizard",
+      "description": "CSV import in 3 steps: upload, column mapping with auto-detect, review with per-row validation. Dependency-free parser included.",
       "registryDependencies": [
         "button",
         "input",
         "label",
         "select"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "lucide-react"
+      ],
       "files": [
         {
           "path": "registry/import-wizard/import-wizard.tsx",
@@ -125,10 +132,126 @@
       ]
     },
     {
+      "name": "kbd",
+      "type": "registry:component",
+      "title": "Kbd",
+      "description": "Keyboard key caps with platform-aware symbols \u2014 renders combos like \u2318K or Ctrl+K.",
+      "registryDependencies": [],
+      "dependencies": [],
+      "files": [
+        {
+          "path": "registry/kbd/kbd.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "number-input",
+      "type": "registry:component",
+      "title": "NumberInput",
+      "description": "Numeric input with steppers, min/max clamp, step, precision and keyboard arrows.",
+      "registryDependencies": [],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/number-input/number-input.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "onboarding-checklist",
+      "type": "registry:component",
+      "title": "OnboardingChecklist",
+      "description": "Dismissable getting-started checklist with progress and localStorage persistence.",
+      "registryDependencies": [
+        "button"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/onboarding-checklist/onboarding-checklist.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "otp-input",
+      "type": "registry:component",
+      "title": "OTPInput",
+      "description": "One-time-code input with auto-advance, paste support, grouped boxes and completion callback.",
+      "registryDependencies": [],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/otp-input/otp-input.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "preview-uploader",
+      "type": "registry:component",
+      "title": "PreviewUploader",
+      "description": "Drag & drop file uploader with image previews, PDF detection and reject reasons.",
+      "registryDependencies": [],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/preview-uploader/preview-uploader.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "rating",
+      "type": "registry:component",
+      "title": "Rating",
+      "description": "Interactive star rating with hover preview, keyboard arrows, partial fill and read-only mode.",
+      "registryDependencies": [],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/rating/rating.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "saved-views",
+      "type": "registry:component",
+      "title": "SavedViews",
+      "description": "Filter chips with named views persisted to localStorage.",
+      "registryDependencies": [
+        "button",
+        "badge",
+        "dropdown-menu"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/saved-views/saved-views.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
       "name": "share-dialog",
       "type": "registry:component",
-      "title": "Share Dialog",
-      "description": "Share dialog with copy-to-clipboard link, invite-by-email list with per-invite roles, member list, and clipboard fallback.",
+      "title": "ShareDialog",
+      "description": "Share dialog with copy-link, invite-by-email with roles and a member list.",
       "registryDependencies": [
         "button",
         "input",
@@ -136,10 +259,78 @@
         "badge",
         "dialog"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "lucide-react"
+      ],
       "files": [
         {
           "path": "registry/share-dialog/share-dialog.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "stepper-nav",
+      "type": "registry:component",
+      "title": "StepperNav",
+      "description": "Horizontal progress stepper with clickable completed steps; pairs with WizardForm.",
+      "registryDependencies": [],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/stepper-nav/stepper-nav.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "tag-input",
+      "type": "registry:component",
+      "title": "TagInput",
+      "description": "Chips input with suggestions, max tags, validation and Backspace removal.",
+      "registryDependencies": [
+        "badge"
+      ],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/tag-input/tag-input.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "timeline",
+      "type": "registry:component",
+      "title": "Timeline",
+      "description": "Vertical event timeline with status dots (success, error, pending) and timestamps.",
+      "registryDependencies": [],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/timeline/timeline.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "wizard-form",
+      "type": "registry:component",
+      "title": "WizardForm",
+      "description": "Multi-step form shell with a step rail, per-step validation and submitting state.",
+      "registryDependencies": [],
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/wizard-form/wizard-form.tsx",
           "type": "registry:component"
         }
       ]

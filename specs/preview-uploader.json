@@ -1,0 +1,16 @@
+{
+  "name": "preview-uploader",
+  "type": "registry:component",
+  "title": "PreviewUploader",
+  "description": "Drag & drop file uploader with image previews, PDF detection and reject reasons.",
+  "registryDependencies": [],
+  "dependencies": [
+    "lucide-react"
+  ],
+  "files": [
+    {
+      "path": "registry/preview-uploader/preview-uploader.tsx"
+    }
+  ],
+  "usage": "<PreviewUploader maxSizeMb={5} onFilesSelected={(files) => upload(files)} />"
+}

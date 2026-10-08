@@ -1,0 +1,33 @@
+{
+  "name": "file-tree",
+  "type": "registry:component",
+  "title": "FileTree",
+  "description": "Hierarchical tree navigation with expand/collapse, folders, selection and per-node icons.",
+  "registryDependencies": [],
+  "dependencies": [
+    "lucide-react"
+  ],
+  "files": [
+    {
+      "path": "registry/file-tree/file-tree.tsx"
+    }
+  ],
+  "usage": "<FileTree\n  nodes={[{ id: \"src\", label: \"src\", children: [{ id: \"app.tsx\", label: \"app.tsx\" }] }]}\n  onSelect={(n) => open(n.id)}\n/>",
+  "props": [
+    [
+      "nodes",
+      "TreeNode[]",
+      "Tree data"
+    ],
+    [
+      "defaultExpanded",
+      "string[]",
+      "Initially open folder ids"
+    ],
+    [
+      "onSelect",
+      "(node: TreeNode) => void",
+      "File selection callback"
+    ]
+  ]
+}

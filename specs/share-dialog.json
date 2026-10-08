@@ -1,0 +1,22 @@
+{
+  "name": "share-dialog",
+  "type": "registry:component",
+  "title": "ShareDialog",
+  "description": "Share dialog with copy-link, invite-by-email with roles and a member list.",
+  "registryDependencies": [
+    "button",
+    "input",
+    "label",
+    "badge",
+    "dialog"
+  ],
+  "dependencies": [
+    "lucide-react"
+  ],
+  "files": [
+    {
+      "path": "registry/share-dialog/share-dialog.tsx"
+    }
+  ],
+  "usage": "<ShareDialog\n  shareUrl={url}\n  onSendInvites={(invites) => api.invite(invites)}\n  existingMembers={members}\n/>"
+}

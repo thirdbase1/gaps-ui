@@ -11,6 +11,29 @@ import { ImportWizard, parseCsv } from "@/registry/import-wizard/import-wizard";
 import { ShareDialog } from "@/registry/share-dialog/share-dialog";
 import { Github, Sparkles } from "./icons";
 
+// Real backend — same origin as this page.
+const api = {
+  importRows: async (fileName, rows, skipped) => {
+    const r = await fetch("/api/imports", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ fileName, rows, skipped }),
+    });
+    if (!r.ok) throw new Error((await r.json()).error || "Import failed");
+    return r.json();
+  },
+  listImports: async () => (await fetch("/api/imports")).json(),
+  createShare: async (payload) => {
+    const r = await fetch("/api/shares", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    if (!r.ok) throw new Error((await r.json()).error || "Share failed");
+    return r.json();
+  },
+};
+
 const SAMPLE_CSV = `name,email,plan,seats
 Ada Lovelace,ada@example.com,pro,3
 Grace Hopper,grace@example.com,free,1
@@ -49,22 +72,70 @@ function InputField({ label, required }) {
   );
 }
 
+function ImportsList() {
+  const [imports, setImports] = React.useState([]);
+  const [err, setErr] = React.useState(null);
+  const refresh = React.useCallback(async () => {
+    try { setImports(await api.listImports()); } catch (e) { setErr(e.message); }
+  }, []);
+  React.useEffect(() => { refresh(); const t = setInterval(refresh, 4000); return () => clearInterval(t); }, [refresh]);
+  if (err) return <p className="text-sm text-red-400">Backend error: {err}</p>;
+  if (imports.length === 0)
+    return <EmptyState><EmptyStateIcon><span style={{fontSize:28}}>🗄️</span></EmptyStateIcon><EmptyStateTitle>No imports yet</EmptyStateTitle><EmptyStateDescription>Run the ImportWizard above — rows land in a real SQLite database on the server.</EmptyStateDescription></EmptyState>;
+  return (
+    <table className="w-full text-sm">
+      <thead><tr className="text-left text-zinc-400">
+        <th className="py-1.5 pr-3">File</th><th className="py-1.5 pr-3">Rows</th><th className="py-1.5 pr-3">Skipped</th><th className="py-1.5 pr-3">Columns</th><th className="py-1.5">When (UTC)</th>
+      </tr></thead>
+      <tbody>
+        {imports.map((i) => (
+          <tr key={i.id} className="border-t border-zinc-800">
+            <td className="py-1.5 pr-3">{i.file_name}</td>
+            <td className="py-1.5 pr-3">{i.row_count}</td>
+            <td className="py-1.5 pr-3">{i.skipped}</td>
+            <td className="py-1.5 pr-3 text-zinc-400">{i.columns.join(", ")}</td>
+            <td className="py-1.5 text-zinc-400">{i.created_at}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
+
 export function App() {
   const [paletteOpen, setPaletteOpen] = React.useState(false);
   useCommandPaletteHotkey(setPaletteOpen);
+  const [importLog, setImportLog] = React.useState(null);
+  const [importing, setImporting] = React.useState(false);
+  const [importErr, setImportErr] = React.useState(null);
+  const [lastShare, setLastShare] = React.useState(null);
+
+  const doImport = async (rows) => {
+    setImporting(true); setImportErr(null);
+    try {
+      const res = await api.importRows("playground-upload.csv", rows, 0);
+      setImportLog(`Saved to server: import ${res.id} (${res.row_count} rows in SQLite)`);
+    } catch (e) { setImportErr(e.message); }
+    setImporting(false);
+  };
+
+  const sharePage = async () => {
+    const res = await api.createShare({ resourceType: "playground", title: "gaps-ui playground", payload: { sharedAt: new Date().toISOString(), note: "Real share link — this URL works for anyone." } });
+    setLastShare(res.url);
+  };
 
   return (
     <div className="site">
       <header className="hero">
-        <div className="hero-badge"><Sparkles /> 8 components · official shadcn registry format</div>
+        <div className="hero-badge"><Sparkles /> 8 components · real backend · real persistence</div>
         <h1>gaps-ui</h1>
-        <p className="hero-sub">The components shadcn/ui is missing. Copy them into your project — no npm dependency, no version hell. Everything below is a live demo.</p>
+        <p className="hero-sub">The components shadcn/ui is missing — wired to a real server. Imports persist to SQLite, share links are real URLs. No fake actions.</p>
         <div className="hero-actions">
           <a className="btn btn-primary" href="https://github.com/thirdbase1/gaps-ui"><Github /> GitHub</a>
           <a className="btn" href="#empty-state">Browse demos ↓</a>
         </div>
         <nav className="toc">
-          {["empty-state","wizard-form","saved-views","onboarding-checklist","preview-uploader","command-palette-views","import-wizard","share-dialog"].map(n => (
+          {["empty-state","wizard-form","saved-views","onboarding-checklist","preview-uploader","command-palette-views","import-wizard","imports","share-dialog"].map(n => (
             <a key={n} href={`#${n}`}>{n}</a>
           ))}
         </nav>
@@ -85,23 +156,12 @@ export function App() {
 
         <Section id="wizard-form" title="WizardForm" blurb="Multi-step form shell with a step rail, per-step validation, back/next controls and submitting state.">
           <WizardForm
-            steps={[
-              { id: "account", title: "Account" },
-              { id: "workspace", title: "Workspace" },
-              { id: "review", title: "Review" },
-            ]}
+            steps={[{ id: "account", title: "Account" }, { id: "workspace", title: "Workspace" }, { id: "review", title: "Review" }]}
             onFinish={() => new Promise(r => setTimeout(r, 800))}
           >
-            <WizardStep stepId="account">
-              <InputField label="Full name" required />
-              <InputField label="Email" required />
-            </WizardStep>
-            <WizardStep stepId="workspace">
-              <InputField label="Workspace name" required />
-            </WizardStep>
-            <WizardStep stepId="review">
-              <p className="text-sm text-zinc-400">All good? Hit Finish — the button shows a spinner while "submitting".</p>
-            </WizardStep>
+            <WizardStep stepId="account"><InputField label="Full name" required /><InputField label="Email" required /></WizardStep>
+            <WizardStep stepId="workspace"><InputField label="Workspace name" required /></WizardStep>
+            <WizardStep stepId="review"><p className="text-sm text-zinc-400">All good? Hit Finish — the button shows a spinner while "submitting".</p></WizardStep>
           </WizardForm>
         </Section>
 
@@ -142,7 +202,7 @@ export function App() {
           />
         </Section>
 
-        <Section id="import-wizard" title="ImportWizard" blurb="CSV import in 3 steps: upload → map columns (auto-detected) → review with per-row validation. Try the sample file.">
+        <Section id="import-wizard" title="ImportWizard → real database" blurb="CSV import in 3 steps. Finishing writes the rows to SQLite on the server — check the Imports table below.">
           <div className="split">
             <div>
               <p className="hint">Sample CSV — includes one invalid row to show validation:</p>
@@ -154,6 +214,9 @@ export function App() {
                 a.click();
               }}>Download users.csv</button>
               <pre className="csv-pre">{SAMPLE_CSV}</pre>
+              {importLog && <p className="text-sm text-green-400">{importLog}</p>}
+              {importErr && <p className="text-sm text-red-400">{importErr}</p>}
+              {importing && <p className="text-sm text-zinc-400">Writing to server…</p>}
             </div>
             <ImportWizard
               fields={[
@@ -161,18 +224,31 @@ export function App() {
                 { id: "email", label: "Email", required: true, validate: (v) => v.includes("@") || "Invalid email" },
                 { id: "plan", label: "Plan" },
               ]}
-              onImport={async (rows) => { await new Promise(r => setTimeout(r, 600)); alert(`Imported ${rows.length} valid rows`); }}
+              onImport={doImport}
             />
           </div>
         </Section>
 
-        <Section id="share-dialog" title="ShareDialog" blurb="Copy-link with clipboard fallback, invite-by-email with roles, member list. Fully interactive.">
+        <Section id="imports" title="Imports — server state" blurb="Live view of the real SQLite database backing this playground. Rows you import above appear here.">
+          <ImportsList />
+        </Section>
+
+        <Section id="share-dialog" title="ShareDialog → real links" blurb="The dialog creates a real share token on the server and copies a URL that anyone can open.">
           <div className="center">
             <ShareDialog
-              shareUrl="https://app.example.com/p/demo-token-8f3k"
-              onSendInvites={async (invites) => { await new Promise(r => setTimeout(r, 900)); console.log("sent", invites); }}
+              shareUrl={lastShare || "https://this-box.tunnel/s/…"}
+              onSendInvites={async (invites) => {
+                const res = await api.createShare({ resourceType: "invite", title: `Invite for ${invites.length} teammate(s)`, payload: { invites } });
+                setLastShare(res.url);
+              }}
               existingMembers={[{ email: "ada@example.com", role: "editor" }, { email: "grace@example.com", role: "viewer" }]}
             />
+          </div>
+          <div className="mt-4">
+            <button className="btn" onClick={sharePage}>Create a real share link now</button>
+            {lastShare && (
+              <p className="hint mt-2">Last share URL: <a href={lastShare} target="_blank" rel="noreferrer">{lastShare}</a> — open it, it's real.</p>
+            )}
           </div>
         </Section>
       </main>

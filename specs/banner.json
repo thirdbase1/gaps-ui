@@ -1,0 +1,28 @@
+{
+  "name": "banner",
+  "type": "registry:component",
+  "title": "Banner",
+  "description": "Full-width announcement/alert strip with tone variants and dismissable persistence.",
+  "registryDependencies": [],
+  "dependencies": [
+    "lucide-react"
+  ],
+  "files": [
+    {
+      "path": "registry/banner/banner.tsx"
+    }
+  ],
+  "usage": "<Banner tone=\"warning\" dismissKey=\"maintenance\">Scheduled maintenance Sunday 02:00 UTC.</Banner>",
+  "props": [
+    [
+      "tone",
+      "'info' | 'success' | 'warning' | 'error'",
+      "Visual tone (default info)"
+    ],
+    [
+      "dismissKey",
+      "string",
+      "localStorage key; enabling adds a dismiss button"
+    ]
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "empty-state",
+  "type": "registry:component",
+  "title": "EmptyState",
+  "description": "Composable empty-state placeholder: icon, title, description, actions.",
+  "registryDependencies": [],
+  "dependencies": [
+    "lucide-react"
+  ],
+  "files": [
+    {
+      "path": "registry/empty-state/empty-state.tsx"
+    }
+  ],
+  "usage": "<EmptyState>\n  <EmptyStateIcon><Inbox /></EmptyStateIcon>\n  <EmptyStateTitle>No projects yet</EmptyStateTitle>\n  <EmptyStateDescription>Create your first project.</EmptyStateDescription>\n  <EmptyStateActions><Button>New project</Button></EmptyStateActions>\n</EmptyState>"
+}

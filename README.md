@@ -12,12 +12,25 @@ shadcn/ui gives you the primitives (button, dialog, command…), and registries 
 
 | Component | What it does |
 |---|---|
-| `empty-state` | Centered placeholder for empty lists/tables/search, with icon, title, description, actions |
-| `wizard-form` | Multi-step form shell: step rail, per-step validation, animated transitions, finish state |
-| `saved-views` | Filter bar with named, persistable views — combine chips, save, switch |
-| `onboarding-checklist` | Dismissable get-started card with progress ring + programmatic `complete()` hook |
-| `preview-uploader` | File input with thumbnails, pdf detection, size formatting, reject reasons, drag-drop |
-| `command-palette-views` | cmdk palette with a "Views" group — jump straight to saved filters (Ctrl/Cmd+K hook included) |
+| `empty-state` | Composable placeholder for empty data: icon, title, description, actions |
+| `wizard-form` | Multi-step form shell: step rail, per-step validation, submitting state |
+| `saved-views` | Filter chips + named views persisted to localStorage |
+| `onboarding-checklist` | Dismissable getting-started checklist with progress + persistence |
+| `preview-uploader` | Drag & drop uploader: image thumbnails, PDF detection, reject reasons |
+| `command-palette-views` | cmdk palette with a Views group + Ctrl/Cmd+K hook |
+| `import-wizard` | CSV import: upload → column mapping (auto-detect) → review; dependency-free parser, per-row validation |
+| `share-dialog` | Copy-link, invite-by-email with roles, member list |
+| `date-range-picker` | From/to date range picker with quick presets, built on shadcn Calendar |
+| `number-input` | Numeric stepper input with min/max clamp, precision, keyboard arrows |
+| `otp-input` | One-time-code input: auto-advance, paste, grouped boxes, completion callback |
+| `tag-input` | Chips input with suggestions, max tags, validation, Backspace removal |
+| `rating` | Star rating: hover preview, keyboard, partial fill, read-only |
+| `timeline` | Vertical event timeline with status dots + timestamps |
+| `kbd` | Keyboard key caps with platform-aware symbols (⌘ vs Ctrl) |
+| `file-tree` | Tree navigation: expand/collapse, selection, per-node icons |
+| `cookie-consent` | Consent banner with accept/reject/custom categories + useConsent hook |
+| `stepper-nav` | Horizontal progress stepper with clickable completed steps |
+| `banner` | Announcement/alert strip with tones + persistent dismiss |
 | `import-wizard` | CSV import: 3 steps (upload → map columns with auto-detect → review), dependency-free parser, per-row validation, invalid rows skipped |
 | `share-dialog` | Copy-link dialog with clipboard fallback, invite-by-email with roles, member list |
 
@@ -62,13 +75,10 @@ Each component folder contains full JSDoc usage docs at the top of the file.
 3. **Product-level, not primitive-level** — we ship the things you'd otherwise hand-roll in every app.
 4. **Accessible by default** — roles, keyboard handling, aria labels included.
 
-## Roadmap
+## Scaling
 
-- [ ] `data-table-views` — saved views wired into TanStack Table
-- [x] `import-wizard` — CSV import with column mapping + validation
-- [x] `share-dialog` — permission picker with invite-by-email flow
-- [ ] `diff-view` — before/after field comparison for admin/audit UIs
+New components are added as JSON specs in `specs/` — `python3 tools/generate.py` then emits the registry JSONs, docs, and index. The registry grows in batches; every item is typechecked (strict tsc) before shipping.
 
-## License
+## Playground
 
-MIT
+A real backend (Node + SQLite, zero deps) backs the live playground: imports persist, share links are real URLs. `node playground/server.mjs` → http://localhost:8899.

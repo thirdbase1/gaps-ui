@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "stepper-nav",
+  "type": "registry:component",
+  "title": "StepperNav",
+  "description": "Horizontal progress stepper with clickable completed steps; pairs with WizardForm.",
+  "registryDependencies": [],
+  "dependencies": [
+    "lucide-react"
+  ],
+  "files": [
+    {
+      "path": "registry/stepper-nav/stepper-nav.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\nimport { Check } from \"lucide-react\";\n\n/**\n * StepperNav \u2014 horizontal progress stepper with clickable completed steps.\n * Pairs with WizardForm or stands alone for status displays.\n *\n * <StepperNav steps={[\"Cart\", \"Shipping\", \"Payment\", \"Done\"]} current={2} onStepClick={go} />\n */\n\nexport function StepperNav({\n  steps,\n  current,\n  onStepClick,\n  allowFutureClicks = false,\n  className,\n}: {\n  steps: string[];\n  /** Index of the current (in-progress) step. */\n  current: number;\n  onStepClick?: (index: number) => void;\n  allowFutureClicks?: boolean;\n  className?: string;\n}) {\n  return (\n    <ol className={cn(\"flex w-full items-center\", className)} aria-label=\"Progress\">\n      {steps.map((label, i) => {\n        const done = i < current;\n        const active = i === current;\n        const clickable = (done || allowFutureClicks) && onStepClick;\n        return (\n          <li key={label} className={cn(\"flex items-center\", i < steps.length - 1 && \"flex-1\")}>\n            <button\n              type=\"button\"\n              disabled={!clickable}\n              onClick={() => clickable && onStepClick?.(i)}\n              aria-current={active ? \"step\" : undefined}\n              className={cn(\n                \"group flex items-center gap-2\",\n                clickable ? \"cursor-pointer\" : \"cursor-default\",\n              )}\n            >\n              <span\n                className={cn(\n                  \"flex size-7 shrink-0 items-center justify-center rounded-full border text-xs font-medium transition-colors\",\n                  done && \"border-primary bg-primary text-primary-foreground\",\n                  active && \"border-primary text-primary\",\n                  !done && !active && \"border-muted-foreground/30 text-muted-foreground\",\n                  clickable && \"group-hover:ring-2 group-hover:ring-ring/30\",\n                )}\n              >\n                {done ? <Check className=\"size-3.5\" /> : i + 1}\n              </span>\n              <span\n                className={cn(\n                  \"text-sm whitespace-nowrap\",\n                  active ? \"font-medium\" : done ? \"text-foreground\" : \"text-muted-foreground\",\n                )}\n              >\n                {label}\n              </span>\n            </button>\n            {i < steps.length - 1 && (\n              <span\n                aria-hidden\n                className={cn(\"mx-3 h-px flex-1\", i < current ? \"bg-primary\" : \"bg-border\", i < steps.length - 1 && \"min-w-6\")}\n              />\n            )}\n          </li>\n        );\n      })}\n    </ol>\n  );\n}\n"
+    }
+  ]
+}

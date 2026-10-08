@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "file-tree",
+  "type": "registry:component",
+  "title": "FileTree",
+  "description": "Hierarchical tree navigation with expand/collapse, folders, selection and per-node icons.",
+  "registryDependencies": [],
+  "dependencies": [
+    "lucide-react"
+  ],
+  "files": [
+    {
+      "path": "registry/file-tree/file-tree.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\nimport { ChevronDown, ChevronRight, File, Folder, FolderOpen } from \"lucide-react\";\n\n/**\n * FileTree \u2014 hierarchical tree navigation with expand/collapse,\n * selected-file callback, and optional per-node icons.\n *\n * <FileTree\n *   nodes={[{ id: \"src\", label: \"src\", children: [{ id: \"a.ts\", label: \"a.ts\" }] }]}\n *   onSelect={(node) => open(node.id)}\n * />\n */\n\nexport interface TreeNode {\n  id: string;\n  label: string;\n  children?: TreeNode[];\n}\n\nfunction Node({\n  node,\n  depth,\n  selectedId,\n  onSelect,\n  expanded,\n  toggle,\n}: {\n  node: TreeNode;\n  depth: number;\n  selectedId: string | null;\n  onSelect?: (node: TreeNode) => void;\n  expanded: Set<string>;\n  toggle: (id: string) => void;\n}) {\n  const isFolder = !!node.children?.length;\n  const open = expanded.has(node.id);\n  const selected = selectedId === node.id;\n\n  return (\n    <li>\n      <button\n        type=\"button\"\n        onClick={() => (isFolder ? toggle(node.id) : onSelect?.(node))}\n        className={cn(\n          \"flex w-full items-center gap-1.5 rounded-md px-2 py-1 text-left text-sm\",\n          selected ? \"bg-muted text-foreground\" : \"hover:bg-muted/60\",\n        )}\n        style={{ paddingLeft: `${depth * 16 + 8}px` }}\n        aria-expanded={isFolder ? open : undefined}\n      >\n        {isFolder ? (\n          open ? <ChevronDown className=\"size-3.5 text-muted-foreground\" /> : <ChevronRight className=\"size-3.5 text-muted-foreground\" />\n        ) : <span className=\"size-3.5\" />}\n        {isFolder ? (\n          open ? <FolderOpen className=\"size-4 text-amber-400\" /> : <Folder className=\"size-4 text-amber-400\" />\n        ) : <File className=\"size-4 text-muted-foreground\" />}\n        <span className=\"truncate\">{node.label}</span>\n      </button>\n      {isFolder && open && node.children && (\n        <ul role=\"group\">\n          {node.children.map((c) => (\n            <Node key={c.id} node={c} depth={depth + 1} selectedId={selectedId} onSelect={onSelect} expanded={expanded} toggle={toggle} />\n          ))}\n        </ul>\n      )}\n    </li>\n  );\n}\n\nexport function FileTree({\n  nodes,\n  defaultExpanded = [],\n  onSelect,\n  className,\n}: {\n  nodes: TreeNode[];\n  defaultExpanded?: string[];\n  onSelect?: (node: TreeNode) => void;\n  className?: string;\n}) {\n  const [expanded, setExpanded] = React.useState(new Set(defaultExpanded));\n  const [selectedId, setSelectedId] = React.useState<string | null>(null);\n\n  const toggle = (id: string) =>\n    setExpanded((prev) => {\n      const next = new Set(prev);\n      if (next.has(id)) next.delete(id);\n      else next.add(id);\n      return next;\n    });\n\n  return (\n    <ul role=\"tree\" className={cn(\"space-y-0.5\", className)}>\n      {nodes.map((n) => (\n        <Node\n          key={n.id}\n          node={n}\n          depth={0}\n          selectedId={selectedId}\n          onSelect={(node) => { setSelectedId(node.id); onSelect?.(node); }}\n          expanded={expanded}\n          toggle={toggle}\n        />\n      ))}\n    </ul>\n  );\n}\n"
+    }
+  ]
+}

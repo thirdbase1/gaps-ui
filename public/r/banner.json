@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "banner",
+  "type": "registry:component",
+  "title": "Banner",
+  "description": "Full-width announcement/alert strip with tone variants and dismissable persistence.",
+  "registryDependencies": [],
+  "dependencies": [
+    "lucide-react"
+  ],
+  "files": [
+    {
+      "path": "registry/banner/banner.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\nimport { X, Info, AlertTriangle, CircleCheck, CircleX } from \"lucide-react\";\n\n/**\n * Banner \u2014 full-width announcement/alert strip above page content with\n * tone variants and dismiss (optionally persisted per id).\n *\n * <Banner tone=\"warning\" dismissKey=\"maint-notice\">Scheduled maintenance Sunday 02:00 UTC.</Banner>\n */\n\ntype Tone = \"info\" | \"success\" | \"warning\" | \"error\";\n\nconst tones: Record<Tone, { wrap: string; icon: React.ReactNode }> = {\n  info: { wrap: \"border-blue-500/30 bg-blue-500/10 text-blue-200\", icon: <Info className=\"size-4\" /> },\n  success: { wrap: \"border-emerald-500/30 bg-emerald-500/10 text-emerald-200\", icon: <CircleCheck className=\"size-4\" /> },\n  warning: { wrap: \"border-amber-500/30 bg-amber-500/10 text-amber-200\", icon: <AlertTriangle className=\"size-4\" /> },\n  error: { wrap: \"border-red-500/30 bg-red-500/10 text-red-200\", icon: <CircleX className=\"size-4\" /> },\n};\n\nexport function Banner({\n  tone = \"info\",\n  dismissKey,\n  onDismiss,\n  children,\n  className,\n}: {\n  tone?: Tone;\n  /** Persist dismissal in localStorage under this key. */\n  dismissKey?: string;\n  onDismiss?: () => void;\n  children: React.ReactNode;\n  className?: string;\n}) {\n  const [dismissed, setDismissed] = React.useState(false);\n\n  React.useEffect(() => {\n    if (dismissKey && localStorage.getItem(`banner-dismissed:${dismissKey}`) === \"1\") setDismissed(true);\n  }, [dismissKey]);\n\n  if (dismissed) return null;\n\n  const dismiss = () => {\n    setDismissed(true);\n    if (dismissKey) try { localStorage.setItem(`banner-dismissed:${dismissKey}`, \"1\"); } catch { /* ignore */ }\n    onDismiss?.();\n  };\n\n  return (\n    <div\n      role=\"status\"\n      className={cn(\n        \"flex w-full items-center gap-2.5 rounded-md border px-3.5 py-2.5 text-sm\",\n        tones[tone].wrap,\n        className,\n      )}\n    >\n      <span className=\"shrink-0\">{tones[tone].icon}</span>\n      <div className=\"min-w-0 flex-1\">{children}</div>\n      {dismissKey !== undefined && (\n        <button\n          type=\"button\"\n          aria-label=\"Dismiss\"\n          onClick={dismiss}\n          className=\"shrink-0 rounded-sm p-0.5 opacity-60 hover:opacity-100\"\n        >\n          <X className=\"size-4\" />\n        </button>\n      )}\n    </div>\n  );\n}\n"
+    }
+  ]
+}

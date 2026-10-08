@@ -1,0 +1,14 @@
+{
+  "name": "kbd",
+  "type": "registry:component",
+  "title": "Kbd",
+  "description": "Keyboard key caps with platform-aware symbols \u2014 renders combos like \u2318K or Ctrl+K.",
+  "registryDependencies": [],
+  "dependencies": [],
+  "files": [
+    {
+      "path": "registry/kbd/kbd.tsx"
+    }
+  ],
+  "usage": "Press <Kbd keys={[\"mod\", \"K\"]} /> to open the palette."
+}

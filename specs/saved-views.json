@@ -1,0 +1,20 @@
+{
+  "name": "saved-views",
+  "type": "registry:component",
+  "title": "SavedViews",
+  "description": "Filter chips with named views persisted to localStorage.",
+  "registryDependencies": [
+    "button",
+    "badge",
+    "dropdown-menu"
+  ],
+  "dependencies": [
+    "lucide-react"
+  ],
+  "files": [
+    {
+      "path": "registry/saved-views/saved-views.tsx"
+    }
+  ],
+  "usage": "<SavedViews\n  storageKey=\"orders\"\n  chips={[{ id: \"status\", label: \"Status\", options: [\"open\", \"shipped\"] }]}\n  onViewChange={(v) => fetchOrders(v.filters)}\n/>"
+}

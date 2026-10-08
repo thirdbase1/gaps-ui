@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "rating",
+  "type": "registry:component",
+  "title": "Rating",
+  "description": "Interactive star rating with hover preview, keyboard arrows, partial fill and read-only mode.",
+  "registryDependencies": [],
+  "dependencies": [
+    "lucide-react"
+  ],
+  "files": [
+    {
+      "path": "registry/rating/rating.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\nimport { Star } from \"lucide-react\";\n\n/**\n * Rating \u2014 interactive star rating with half-step display support,\n * hover preview, keyboard arrows, and read-only mode.\n *\n * <Rating value={rating} onChange={setRating} max={5} allowClear />\n */\n\nexport function Rating({\n  value,\n  onChange,\n  max = 5,\n  allowClear = false,\n  readOnly = false,\n  size = \"md\",\n  className,\n  \"aria-label\": ariaLabel = \"Rating\",\n}: {\n  value: number;\n  onChange?: (v: number) => void;\n  max?: number;\n  allowClear?: boolean;\n  readOnly?: boolean;\n  size?: \"sm\" | \"md\" | \"lg\";\n  className?: string;\n  \"aria-label\"?: string;\n}) {\n  const [hover, setHover] = React.useState<number | null>(null);\n  const shown = hover ?? value;\n  const sizes = { sm: \"size-3.5\", md: \"size-5\", lg: \"size-7\" } as const;\n\n  return (\n    <div\n      role={readOnly ? \"img\" : \"slider\"}\n      aria-label={ariaLabel}\n      aria-valuenow={readOnly ? undefined : value}\n      aria-valuemin={readOnly ? undefined : 0}\n      aria-valuemax={readOnly ? undefined : max}\n      tabIndex={readOnly ? undefined : 0}\n      onKeyDown={(e) => {\n        if (readOnly) return;\n        if (e.key === \"ArrowRight\" || e.key === \"ArrowUp\") { e.preventDefault(); onChange?.(Math.min(max, value + 1)); }\n        if (e.key === \"ArrowLeft\" || e.key === \"ArrowDown\") { e.preventDefault(); onChange?.(Math.max(0, value - 1)); }\n      }}\n      onMouseLeave={() => setHover(null)}\n      className={cn(\"inline-flex items-center gap-0.5\", !readOnly && \"cursor-pointer\", className)}\n    >\n      {Array.from({ length: max }, (_, i) => i + 1).map((n) => {\n        const filled = n <= Math.floor(shown);\n        const partial = !filled && n - 1 < shown && shown % 1 !== 0;\n        return (\n          <button\n            key={n}\n            type=\"button\"\n            tabIndex={-1}\n            disabled={readOnly}\n            aria-hidden={readOnly}\n            onMouseEnter={() => !readOnly && setHover(n)}\n            onClick={() => {\n              if (readOnly) return;\n              if (allowClear && n === value) onChange?.(0);\n              else onChange?.(n);\n            }}\n            className={cn(\"relative\", readOnly && \"pointer-events-none\")}\n          >\n            <Star\n              className={cn(\n                sizes[size],\n                filled || partial ? \"fill-amber-400 text-amber-400\" : \"fill-transparent text-muted-foreground/40\",\n              )}\n            />\n            {partial && (\n              <span className=\"absolute inset-0 overflow-hidden\" style={{ width: `${(shown % 1) * 100}%` }}>\n                <Star className={cn(sizes[size], \"fill-amber-400 text-amber-400\")} />\n              </span>\n            )}\n          </button>\n        );\n      })}\n    </div>\n  );\n}\n"
+    }
+  ]
+}

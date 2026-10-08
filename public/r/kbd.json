@@ -1,0 +1,16 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "kbd",
+  "type": "registry:component",
+  "title": "Kbd",
+  "description": "Keyboard key caps with platform-aware symbols \u2014 renders combos like \u2318K or Ctrl+K.",
+  "registryDependencies": [],
+  "dependencies": [],
+  "files": [
+    {
+      "path": "registry/kbd/kbd.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\n/**\n * Kbd \u2014 renders a keyboard key or key combo in visual key-cap style.\n *\n * <Kbd>\u2318</Kbd> <Kbd>K</Kbd> \u2014 or a combo: <Kbd keys={[\"mod\", \"shift\", \"P\"]} />\n */\n\nconst MAC_SYMBOLS: Record<string, string> = {\n  mod: \"\u2318\",\n  ctrl: \"\u2303\",\n  alt: \"\u2325\",\n  shift: \"\u21e7\",\n  enter: \"\u21b5\",\n  backspace: \"\u232b\",\n  esc: \"\u238b\",\n  tab: \"\u21e5\",\n  arrowup: \"\u2191\",\n  arrowdown: \"\u2193\",\n  arrowleft: \"\u2190\",\n  arrowright: \"\u2192\",\n};\n\nexport function Kbd({\n  children,\n  keys,\n  className,\n}: {\n  children?: React.ReactNode;\n  /** Render a combo, e.g. [\"mod\", \"K\"]. Symbols adapt to platform. */\n  keys?: string[];\n  className?: string;\n}) {\n  const isMac = typeof navigator !== \"undefined\" && /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);\n  const render = (k: string) => {\n    const key = k.toLowerCase();\n    if (isMac && MAC_SYMBOLS[key]) return MAC_SYMBOLS[key];\n    if (key === \"mod\") return isMac ? \"\u2318\" : \"Ctrl\";\n    if (key === \"esc\") return \"Esc\";\n    return k.length === 1 ? k.toUpperCase() : k.charAt(0).toUpperCase() + k.slice(1);\n  };\n\n  if (keys) {\n    return (\n      <span className={cn(\"inline-flex items-center gap-1\", className)}>\n        {keys.map((k, i) => (\n          <kbd\n            key={i}\n            className=\"inline-flex h-5 min-w-5 select-none items-center justify-center rounded border border-border bg-muted px-1 font-sans text-[11px] font-medium text-foreground\"\n          >\n            {render(k)}\n          </kbd>\n        ))}\n      </span>\n    );\n  }\n  return (\n    <kbd\n      className={cn(\n        \"inline-flex h-5 min-w-5 select-none items-center justify-center rounded border border-border bg-muted px-1 font-sans text-[11px] font-medium text-foreground\",\n        className,\n      )}\n    >\n      {children}\n    </kbd>\n  );\n}\n"
+    }
+  ]
+}

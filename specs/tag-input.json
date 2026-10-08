@@ -1,0 +1,40 @@
+{
+  "name": "tag-input",
+  "type": "registry:component",
+  "title": "TagInput",
+  "description": "Chips input with suggestions, max tags, validation and Backspace removal.",
+  "registryDependencies": [
+    "badge"
+  ],
+  "dependencies": [
+    "lucide-react"
+  ],
+  "files": [
+    {
+      "path": "registry/tag-input/tag-input.tsx"
+    }
+  ],
+  "usage": "<TagInput value={tags} onChange={setTags} suggestions={allTags} maxTags={10} />",
+  "props": [
+    [
+      "value",
+      "string[]",
+      "Current tags"
+    ],
+    [
+      "onChange",
+      "(tags: string[]) => void",
+      "Change callback"
+    ],
+    [
+      "suggestions",
+      "string[]",
+      "Suggested tags shown while typing"
+    ],
+    [
+      "maxTags",
+      "number",
+      "Upper bound"
+    ]
+  ]
+}

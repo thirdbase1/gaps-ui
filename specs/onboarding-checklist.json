@@ -1,0 +1,18 @@
+{
+  "name": "onboarding-checklist",
+  "type": "registry:component",
+  "title": "OnboardingChecklist",
+  "description": "Dismissable getting-started checklist with progress and localStorage persistence.",
+  "registryDependencies": [
+    "button"
+  ],
+  "dependencies": [
+    "lucide-react"
+  ],
+  "files": [
+    {
+      "path": "registry/onboarding-checklist/onboarding-checklist.tsx"
+    }
+  ],
+  "usage": "<OnboardingChecklist storageKey=\"onboarding\" title=\"Get started\">\n  <OnboardingTask id=\"invite\" label=\"Invite a teammate\" />\n  <OnboardingTask id=\"repo\" label=\"Connect a repo\" href=\"/settings\" />\n</OnboardingChecklist>"
+}

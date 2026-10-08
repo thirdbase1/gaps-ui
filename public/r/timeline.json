@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "timeline",
+  "type": "registry:component",
+  "title": "Timeline",
+  "description": "Vertical event timeline with status dots (success, error, pending) and timestamps.",
+  "registryDependencies": [],
+  "dependencies": [
+    "lucide-react"
+  ],
+  "files": [
+    {
+      "path": "registry/timeline/timeline.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\nimport { Check, X, Loader2 } from \"lucide-react\";\n\n/**\n * Timeline \u2014 vertical event/status timeline. Each item has a dot\n * (default / success / error / pending), title, description and timestamp.\n *\n * <Timeline>\n *   <TimelineItem title=\"Deploy started\" timestamp=\"12:01\" />\n *   <TimelineItem status=\"success\" title=\"Build passed\" timestamp=\"12:04\" />\n * </Timeline>\n */\n\nexport type TimelineStatus = \"default\" | \"success\" | \"error\" | \"pending\";\n\nexport function Timeline({ className, children }: { className?: string; children: React.ReactNode }) {\n  return <ol className={cn(\"relative space-y-6 border-l border-border pl-6\", className)}>{children}</ol>;\n}\n\nconst dotStyles: Record<TimelineStatus, string> = {\n  default: \"border-muted-foreground/40 bg-background\",\n  success: \"border-emerald-500 bg-emerald-500 text-white\",\n  error: \"border-red-500 bg-red-500 text-white\",\n  pending: \"border-border bg-background\",\n};\n\nexport function TimelineItem({\n  status = \"default\",\n  title,\n  description,\n  timestamp,\n  icon,\n  className,\n}: {\n  status?: TimelineStatus;\n  title: React.ReactNode;\n  description?: React.ReactNode;\n  timestamp?: React.ReactNode;\n  icon?: React.ReactNode;\n  className?: string;\n}) {\n  return (\n    <li className={cn(\"relative\", className)}>\n      <span\n        className={cn(\n          \"absolute -left-[31px] flex size-5 items-center justify-center rounded-full border-2\",\n          dotStyles[status],\n        )}\n      >\n        {icon ??\n          (status === \"success\" && <Check className=\"size-3\" />) ??\n          (status === \"error\" && <X className=\"size-3\" />) ??\n          (status === \"pending\" && <Loader2 className=\"size-3 animate-spin text-muted-foreground\" />)}\n      </span>\n      <div className=\"flex flex-wrap items-baseline gap-2\">\n        <p className={cn(\"text-sm font-medium\", status === \"pending\" && \"text-muted-foreground\")}>{title}</p>\n        {timestamp && <time className=\"text-xs text-muted-foreground\">{timestamp}</time>}\n      </div>\n      {description && <p className=\"mt-0.5 text-sm text-muted-foreground\">{description}</p>}\n    </li>\n  );\n}\n"
+    }
+  ]
+}

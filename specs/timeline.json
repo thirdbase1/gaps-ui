@@ -1,0 +1,33 @@
+{
+  "name": "timeline",
+  "type": "registry:component",
+  "title": "Timeline",
+  "description": "Vertical event timeline with status dots (success, error, pending) and timestamps.",
+  "registryDependencies": [],
+  "dependencies": [
+    "lucide-react"
+  ],
+  "files": [
+    {
+      "path": "registry/timeline/timeline.tsx"
+    }
+  ],
+  "usage": "<Timeline>\n  <TimelineItem title=\"Deploy started\" timestamp=\"12:01\" />\n  <TimelineItem status=\"success\" title=\"Build passed\" timestamp=\"12:04\" />\n  <TimelineItem status=\"error\" title=\"Smoke test failed\" timestamp=\"12:06\" />\n</Timeline>",
+  "props": [
+    [
+      "status",
+      "'default' | 'success' | 'error' | 'pending'",
+      "Dot style per item"
+    ],
+    [
+      "title",
+      "ReactNode",
+      "Item title"
+    ],
+    [
+      "timestamp",
+      "ReactNode",
+      "Right-aligned time"
+    ]
+  ]
+}

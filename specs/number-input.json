@@ -1,0 +1,43 @@
+{
+  "name": "number-input",
+  "type": "registry:component",
+  "title": "NumberInput",
+  "description": "Numeric input with steppers, min/max clamp, step, precision and keyboard arrows.",
+  "registryDependencies": [],
+  "dependencies": [
+    "lucide-react"
+  ],
+  "files": [
+    {
+      "path": "registry/number-input/number-input.tsx"
+    }
+  ],
+  "usage": "<NumberInput value={qty} onChange={setQty} min={0} max={99} suffix=\"pcs\" />",
+  "props": [
+    [
+      "value",
+      "number | null",
+      "Current value"
+    ],
+    [
+      "onChange",
+      "(v: number | null) => void",
+      "Change callback"
+    ],
+    [
+      "min / max",
+      "number",
+      "Clamp bounds"
+    ],
+    [
+      "step",
+      "number",
+      "Stepper increment (default 1)"
+    ],
+    [
+      "precision",
+      "number",
+      "Decimal places to round to"
+    ]
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "name": "date-range-picker",
+  "type": "registry:component",
+  "title": "DateRangePicker",
+  "description": "From/to date range picker built on the shadcn Calendar with quick presets and clear.",
+  "registryDependencies": [
+    "button",
+    "calendar",
+    "popover"
+  ],
+  "dependencies": [
+    "lucide-react",
+    "date-fns"
+  ],
+  "files": [
+    {
+      "path": "registry/date-range-picker/date-range-picker.tsx"
+    }
+  ],
+  "usage": "const [range, setRange] = useState<DateRange>();\n<DateRangePicker value={range} onChange={setRange} presets />",
+  "props": [
+    [
+      "value",
+      "DateRange",
+      "Controlled { from, to }"
+    ],
+    [
+      "onChange",
+      "(range: DateRange) => void",
+      "Selection callback"
+    ],
+    [
+      "presets",
+      "boolean",
+      "Show 7/30/90-day presets (default true)"
+    ]
+  ]
+}

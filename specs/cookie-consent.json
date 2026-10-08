@@ -1,0 +1,35 @@
+{
+  "name": "cookie-consent",
+  "type": "registry:component",
+  "title": "CookieConsent",
+  "description": "Cookie consent banner with accept/reject/custom categories, persisted decision and a useConsent hook.",
+  "registryDependencies": [
+    "button"
+  ],
+  "dependencies": [
+    "lucide-react"
+  ],
+  "files": [
+    {
+      "path": "registry/cookie-consent/cookie-consent.tsx"
+    }
+  ],
+  "usage": "<CookieConsent\n  categories={[{ id: \"analytics\", label: \"Analytics\" }]}\n  onDecision={(d) => analytics.setConsent(d)}\n/>",
+  "props": [
+    [
+      "categories",
+      "ConsentCategory[]",
+      "Optional granular categories"
+    ],
+    [
+      "onDecision",
+      "(d: ConsentDecision) => void",
+      "Called with the user's choice"
+    ],
+    [
+      "position",
+      "'bottom' | 'bottom-right'",
+      "Placement (default bottom)"
+    ]
+  ]
+}

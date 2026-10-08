@@ -1,0 +1,33 @@
+{
+  "name": "stepper-nav",
+  "type": "registry:component",
+  "title": "StepperNav",
+  "description": "Horizontal progress stepper with clickable completed steps; pairs with WizardForm.",
+  "registryDependencies": [],
+  "dependencies": [
+    "lucide-react"
+  ],
+  "files": [
+    {
+      "path": "registry/stepper-nav/stepper-nav.tsx"
+    }
+  ],
+  "usage": "<StepperNav steps={[\"Cart\", \"Shipping\", \"Payment\", \"Done\"]} current={2} onStepClick={go} />",
+  "props": [
+    [
+      "steps",
+      "string[]",
+      "Step labels"
+    ],
+    [
+      "current",
+      "number",
+      "Current step index"
+    ],
+    [
+      "onStepClick",
+      "(i: number) => void",
+      "Click handler for completed steps"
+    ]
+  ]
+}

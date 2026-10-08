@@ -1,0 +1,33 @@
+{
+  "name": "otp-input",
+  "type": "registry:component",
+  "title": "OTPInput",
+  "description": "One-time-code input with auto-advance, paste support, grouped boxes and completion callback.",
+  "registryDependencies": [],
+  "dependencies": [
+    "lucide-react"
+  ],
+  "files": [
+    {
+      "path": "registry/otp-input/otp-input.tsx"
+    }
+  ],
+  "usage": "<OTPInput length={6} onComplete={(code) => verify(code)} />",
+  "props": [
+    [
+      "length",
+      "number",
+      "Number of code boxes (default 6)"
+    ],
+    [
+      "onComplete",
+      "(code: string) => void",
+      "Called when all boxes are filled"
+    ],
+    [
+      "groupSize",
+      "number",
+      "Boxes per visual group (default 3)"
+    ]
+  ]
+}

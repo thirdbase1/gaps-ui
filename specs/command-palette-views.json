@@ -1,0 +1,20 @@
+{
+  "name": "command-palette-views",
+  "type": "registry:component",
+  "title": "CommandPaletteViews",
+  "description": "cmdk command palette with a Views group and a Ctrl/Cmd+K hotkey hook.",
+  "registryDependencies": [
+    "command",
+    "dialog"
+  ],
+  "dependencies": [
+    "lucide-react",
+    "cmdk"
+  ],
+  "files": [
+    {
+      "path": "registry/command-palette-views/command-palette-views.tsx"
+    }
+  ],
+  "usage": "const [open, setOpen] = useState(false);\nuseCommandPaletteHotkey(setOpen);\n<CommandPaletteViews open={open} onOpenChange={setOpen} views={views} onViewSelect={jump} />"
+}

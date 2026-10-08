@@ -1,0 +1,21 @@
+{
+  "name": "import-wizard",
+  "type": "registry:component",
+  "title": "ImportWizard",
+  "description": "CSV import in 3 steps: upload, column mapping with auto-detect, review with per-row validation. Dependency-free parser included.",
+  "registryDependencies": [
+    "button",
+    "input",
+    "label",
+    "select"
+  ],
+  "dependencies": [
+    "lucide-react"
+  ],
+  "files": [
+    {
+      "path": "registry/import-wizard/import-wizard.tsx"
+    }
+  ],
+  "usage": "<ImportWizard\n  fields={[\n    { id: \"email\", label: \"Email\", required: true, validate: (v) => v.includes(\"@\") || \"Invalid email\" },\n  ]}\n  onImport={(rows) => api.import(rows)}\n/>"
+}
