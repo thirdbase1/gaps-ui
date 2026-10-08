@@ -263,7 +263,7 @@ export function SavedViews({
                 {v.name}
                 <X
                   className="size-3 opacity-50 hover:opacity-100"
-                  onClick={(e) => {
+                  onClick={(e: React.MouseEvent) => {
                     e.stopPropagation();
                     deleteView(v.id);
                   }}

@@ -329,7 +329,7 @@ export function ImportWizard({
                   <span aria-hidden className="text-muted-foreground">←</span>
                   <Select
                     value={mapping[f.id] ?? ""}
-                    onValueChange={(v) =>
+                    onValueChange={(v: string) =>
                       setMapping((prev) => ({ ...prev, [f.id]: v || null }))
                     }
                   >
